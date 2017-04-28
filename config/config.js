@@ -13,7 +13,8 @@
    app_description: '暂时进行框架的搭建',
    app_keywords: 'Duncan',
    app_version: '0.1.0',
-   cookieSecret: 'snail',
+   cookieSecret: '',
+   jwt_secret: 'duncan',
    isdev: false, //true:开发环境  false:生产环境
    port: 3000,//服务器的端口
    host: '127.0.0.1',
