@@ -10,17 +10,14 @@
  var router = express.Router();
  var app1 = express();
  var test = appRequire('util/jwthelper');
+ var login = appRequire('api/login');
  
- router.get('/', function(req, res, next) {
+ router.get('/login', function(req, res, next) {
 	 res.render('login', {
 		 title: 'login登录接口'
 	 })
 	 test();
  });
  
- router.use(function (req, res, next) {
-	 console.log("dadas");
-	 next();
- });
- 
+ router.use('/login', login);
  module.exports = router;

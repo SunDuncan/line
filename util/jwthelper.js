@@ -15,7 +15,7 @@
 	 return dateObj.setDate(dateObj.getDate() + numDays);
  }
  
- module.exports = function(user) {
+ exports.getToken = function(user) {
  	var expires = expiresIn(1);//3天后token过期
 	 var token = jwt.encode({
 		 exp: expires

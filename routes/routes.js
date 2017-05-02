@@ -11,5 +11,5 @@
 	 
 	 console.log("进入route");
 	 //api相关
-	 app.use('/api', apiRoute);
+	 app.use('/api/v1', apiRoute);
  }
