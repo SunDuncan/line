@@ -11,6 +11,7 @@
  var app1 = express();
  var test = appRequire('util/jwthelper');
  var login = appRequire('api/login');
+ var sign = appRequire('api/sign');
  
  router.get('/login', function(req, res, next) {
 	 res.render('login', {
@@ -20,4 +21,5 @@
  });
  
  router.use('/login', login);
+ router.use('/sign', sign);
  module.exports = router;

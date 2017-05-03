@@ -7,6 +7,8 @@ var routes = appRequire('routes/routes');
 var bodyParser = require('body-parser');
 var app = express();
 var apiAuth = appRequire('util/validauth');
+//var cookieParser = require('cookie-parser');
+
 
 //加载hbs模块
 var hbs = require('hbs');

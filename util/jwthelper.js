@@ -21,6 +21,11 @@
 		 exp: expires
 	 }, config.jwt_secret); 
 	 
+	 
+	 var decoded = jwt.decode(token, config.jwt_secret);
+	 
+	 console.log(decoded);
+	  
 	 return {
 		 access_token: token,
 		 data: user,

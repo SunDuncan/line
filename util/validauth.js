@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
 	} else {
 		var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
 		var key = (req.body && req.body.key) || (req.query && req.query.key) || req.headers['key'];
-
+		
 		if (token || key) {
 			try {
 				if (token == undefined || token.split('.').length !== 3) {
@@ -26,8 +26,9 @@ module.exports = function (req, res, next) {
 						"message": "token不合法"
 					});
 				}
+               
+			  var decoded = jwt.decode(token, config.jwt_secret);
 
-				var decoded = jwt.decode(token, config.jwt_secret);
 				if (decoded.exp <= Date.now()) {
 					res.status(400);
 					res.json({
