@@ -9,7 +9,6 @@
  var jwt = require('jwt-simple');
  var config = appRequire('config/config');
  
- 
  function expiresIn(numDays) {
 	 var dateObj = new Date();
 	 return dateObj.setDate(dateObj.getDate() + numDays);
@@ -21,11 +20,7 @@
 		 exp: expires
 	 }, config.jwt_secret); 
 	 
-	 
-	 var decoded = jwt.decode(token, config.jwt_secret);
-	 
-	 console.log(decoded);
-	  
+
 	 return {
 		 access_token: token,
 		 data: user,

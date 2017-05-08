@@ -9,15 +9,14 @@
  var express = require('express');
  var router = express.Router();
  var app1 = express();
- var test = appRequire('util/jwthelper');
  var login = appRequire('api/login');
  var sign = appRequire('api/sign');
  
  router.get('/login', function(req, res, next) {
-	 res.render('login', {
-		 title: 'login登录接口'
+	 res.render('picture', {
+		 title: 'loginde',
+		 name: '/images/portrait/2.jpg'
 	 })
-	 test();
  });
  
  router.use('/login', login);

@@ -11,7 +11,7 @@ var config = appRequire('config/config');
 
 
 module.exports = function (req, res, next) {
-	if (res.url === '/' || req.url === '/login' || req.url === '/register' || req.url === '/api/v1/login') {
+	if (res.url === '/' || req.url === '/login' || req.url === '/register' || req.url === '/api/v1/login' || req.url === '/api/v1/sign') {
 		next();
 	} else {
 		var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];

@@ -5,6 +5,7 @@ var express = require('express');
 var config = appRequire('config/config');
 var routes = appRequire('routes/routes');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var app = express();
 var apiAuth = appRequire('util/validauth');
 //var cookieParser = require('cookie-parser');
@@ -32,11 +33,16 @@ app.use(bodyParser.json());
 
 //加载解析urlencoded请求体的中间件
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
 
 //制定静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+
+//加载cookie中间件
+app.use(cookieParser());
+
 
 //设置头文件
 app.all('/*', function(req, res, next) {

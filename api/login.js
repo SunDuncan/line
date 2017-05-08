@@ -41,7 +41,7 @@
 	userService.querySingleUser(data.AccountName, data.password, function (err, queryResult) {
 		if (err) {
 			res.status(500);
-			console.log(queryResult);
+
 			return res.json(resultData);
 		}
 		
@@ -68,5 +68,7 @@
 	});
 	
  });
+ 
+ 
  
  module.exports = router;
