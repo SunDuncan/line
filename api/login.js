@@ -10,6 +10,7 @@
  var router = express.Router();
  var jwtHelper = appRequire('util/jwthelper'); 
  var userService = appRequire('service/driver/user/userservice');
+ var logger = appRequire("util/loghelper").helper;
  
  
  router.post('/', function(req, res) {
@@ -29,6 +30,7 @@
 		res.status(401);
 		resultData.data.isSuccess = false;
 		resultData.data.msg = '账号密码不能为空';
+		logger.writerError("[api/login]账户密码不能为空");
 		return res.json(resultData);
 	}
 	
@@ -49,6 +51,7 @@
 		if (queryResult == undefined || queryResult.length == 0) {
 			res.status(401);
 			resultData.data.msg = '账号密码不匹配，请重新输入';
+			logger.writeError("[api/login]账户密码不匹配，请重输入");
 			return res.json(resultData);
 		}
 		
@@ -63,6 +66,7 @@
 		
 		resultData.data.signType = signStatus;
 		
+		logger.writeInfo("[api/login]登录成功");
 		return res.json(jwtHelper.getToken(resultData.data));
 		
 	});

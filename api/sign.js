@@ -11,7 +11,7 @@ var url = require('url');
 var router = express.Router();
 var moment = require('moment');
 var userService = appRequire('service/driver/user/userservice');
- 
+var logger = appRequire("util/loghelper").helper; 
  
 /**
  * 插入用户的信息
@@ -44,6 +44,8 @@ router.post('/', function (req, res) {
 		return;
 	}
 
+    logger.writeError("[api/sign]有必要的参数量没有传");
+	    
 	var dataValue = {
 		UserName: userName,
 		Gender: gender,
@@ -69,6 +71,8 @@ router.post('/', function (req, res) {
 		return;
 	}
 	 
+	logger.writeError("[api/sign]有必要的参数量的值没有传");
+	 
 	//用来用户名判断长度
 	if (userName.length > 100) {
 		res.status(400);
@@ -81,6 +85,8 @@ router.post('/', function (req, res) {
 
 	}
 
+    logger.writeError("[api/sign]姓名的字符长度超过100");
+	
 	//用来账户名判断长度
 	if (accountName.length > 100) {
 		res.status(400);
@@ -91,6 +97,7 @@ router.post('/', function (req, res) {
 				msg: "昵称名的字符长度超过的100"
 			});
 	}
+	logger.writeError("[api/sign]昵称的字符长度超过100");
 
     if (!(/^\d{17}[x|\d|X]/.test(idCard))) {
 		res.status(400);
@@ -101,6 +108,8 @@ router.post('/', function (req, res) {
 		});
 		return ;
 	}
+	logger.writeError("[api/sign]请输入正确的身份证号码");
+	
 	
     dataValue.CreateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 	dataValue.IsActive = 1;
@@ -117,7 +126,9 @@ router.post('/', function (req, res) {
 			  status: 500,
 			  isSuccess: false,
 			  msg: '服务器出错'
-		  })
+		  });
+		  
+		  logger.writeError("[api/sign]查询用户信息的时候服务器出错");
 		  return ;
 	  } 
 	  
@@ -127,7 +138,9 @@ router.post('/', function (req, res) {
 			 status: 401,
 			 isSuccess: false,
 			 msg: "昵称已存在" 
-		  })		  
+		  })
+		  
+		  logger.writeError("[api/sign]昵称已经存在");		  
 	  }
 	  
 	  userService.insertUser(dataValue, function (err, insertResult) {
@@ -148,6 +161,7 @@ router.post('/', function (req, res) {
 				isSuccess: true,
 				msg: "注册成功" 
 			 });
+			 logger.writeError("[api/sign]注册成功");
 			 return ;
 		 }
 	  });

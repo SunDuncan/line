@@ -14,11 +14,13 @@ var express = require('express');
 var router = express.Router();
 var userService = appRequire('service/driver/user/userservice');
 var dateverify = appRequire('util/dateverify');
+var logger = appRequire('util/loghelper').helper;
 var moment = require('moment');
 
 router.get('/', function (req, res) {
   
-  console.log("进入查询用户的路由");
+  logger.writeInfo("[routes/backend/user/userroute]" + "进入用户的信息查询路由");
+  
   var accountID = req.query.key ? req.query.key : '';
   var curPage = parseInt(req.query.curpage) ? parseInt(req.query.curpage) : 1;
   var pageNum = parseInt(req.query.pageNum) ? parseInt(req.query.pageNum) : 15;
@@ -54,6 +56,7 @@ router.get('/', function (req, res) {
         isSuccess: false,
         msg: '输入的账户ID不是数字'
       });
+      logger.writeError("[routes/backend/user/userroute]" + "输入的账号ID不是数字");
       return ;
     }
   }
@@ -68,6 +71,8 @@ router.get('/', function (req, res) {
         isSuccess: false,
         msg: '输入的状态ID不是数字'
       });
+      
+      logger.writeError("[routes/backend/user/userroute]" + "输入的状态ID不是数字");
       return ;
     }    
   }
@@ -81,6 +86,8 @@ router.get('/', function (req, res) {
         isSuccess: false,
         msg: '查询数量失败，数据库出错'
       });
+      
+      logger.writeError("[routes/backend/user/userroute]" + "查询数量失败，数据库出错");
       return;
     }
 
@@ -94,6 +101,8 @@ router.get('/', function (req, res) {
           isSuccess: false,
           msg: '服务器内部的错误'
         });
+        
+        logger.writeError("[routes/backend/user/userroute]" + "服务器内部的错误");
         return;
       }
 
@@ -104,6 +113,8 @@ router.get('/', function (req, res) {
           isSuccess: false,
           msg: '数据库未匹配到数据'
         });
+        
+        logger.writeError("[routes/backend/user/userroute]" + "数据库未匹配到数据");
         return;
       }
       
@@ -127,6 +138,7 @@ router.get('/', function (req, res) {
            returnResult.curpageNum = returnResult.dataNum - (returnResult.totalPage - 1) * returnResult.curpageNum;          
         }
         
+        logger.writeInfo("[routes/backend/user/userroute]查询成功");
         res.status(200);
         res.json(returnResult);
         return ;
@@ -137,6 +149,8 @@ router.get('/', function (req, res) {
           isSuccess: false,
           msg: '数据库没有数据'
         })
+        
+        logger.writeWarn("[routes/backend/user/userroute]" + "数据库中没有数据");
         return ;
       }      
     });
