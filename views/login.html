@@ -1,8 +1,49 @@
 <h1>登录界面</h1>
 <div>
-	<form method="post" action="/">
-		<p>用户名：</p> <input type="text" name="username" id="usename">
-		<p>密码: </p> <input type="password" name="pass" id="pass">
-		<input type="submit" id = "login" value="登录">
+	<form>
+		<p>用户名：</p>
+		<input type="text" name="username" id="username">
+		<p>密码: </p>
+		<input type="password" name="pass" id="pass">
+		<input type="button" id="login" value="登录">
 	</form>
+	<p id="buttonResult">
+	</p>
 </div>
+
+<script>
+	
+	window.onload = function () {
+		 var button = document.getElementById("login");
+		 button.onclick = loginResult;
+	}
+	
+	function loginResult() {
+		var username = document.getElementById("username").value;
+		var password = document.getElementById("pass").value;
+		var buttonResult = document.getElementById("buttonResult");
+		
+		var request = new XMLHttpRequest();
+		request.open("POST", "api/v1/login");
+		var data = "username=" + username + "&password=" + password;
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		request.send(data);
+		request.onreadystatechange = function() {
+			if (request.readyState === 4) {
+				if (request.status === 200) {
+					
+					var loginInfo = JSON.parse(request.responseText);
+					
+					buttonResult.innerHTML = request.responseText;
+					localStorage.setItem("access_token", loginInfo.access_token);
+					localStorage.setItem("key", loginInfo.data.accountId);
+					var url = "index?access_token=" + localStorage.getItem("access_token"); 
+					location.href = url;
+				} else {
+					alert("发生错误:" + request.status);
+				}
+			}
+		}
+	}
+
+</script>

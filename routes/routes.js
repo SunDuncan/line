@@ -7,11 +7,12 @@
  */
  
  var apiRoute = appRequire('routes/api/apiroute');
- var userRoute = appRequire('routes/backend/user/userroute');
+ var backendRoute = appRequire('routes/backend/backendroute');
  module.exports = function (app) {
 	 
 	 console.log("进入route");
 	 //api相关
 	 app.use('/api/v1', apiRoute);
-	 app.use('/user', userRoute);
+	 app.use('/', backendRoute);
+	 
  }
