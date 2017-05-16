@@ -3,11 +3,20 @@ var router = express.Router();
 var userRoute = appRequire('routes/backend/user/userroute');
 
 router.get('/login', function (req, res, next) {
-	res.render('login', {'title': "登录"});
+	res.render('login', {
+		'title': "登录",
+		'cssList': {
+			footer: '/css/footer.css',
+			header: '/css/header.css'
+		},
+		'jsList': {
+			user: '/js/user.js'
+		}
+     });
 });
 
 router.get('/index', function (req, res, next) {
-    res.render('index', {'title': "主页"});	
+    res.render('index', { 'title': "主页" });
 });
 
 router.use('/user', userRoute);

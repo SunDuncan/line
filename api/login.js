@@ -30,7 +30,7 @@
 		res.status(401);
 		resultData.data.isSuccess = false;
 		resultData.data.msg = '账号密码不能为空';
-		logger.writerError("[api/login]账户密码不能为空");
+		logger.writeError("[api/login]账户密码不能为空");
 		return res.json(resultData);
 	}
 	

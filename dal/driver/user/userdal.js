@@ -8,6 +8,7 @@
 var db_driver = appRequire('db/driver');
 var userModel = appRequire('model/driver/user/usermodel');
 var config = appRequire('config/config');
+var userKey = appRequire('model/driver/user/usermodel');
  
 //根据Account,pwd查询单一有效用户
 exports.querySingleUser = function (accountName, pwd, callback) {
@@ -16,6 +17,7 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 	arr.push("from User Where IsActive = 1 and AccountName = ? and Pwd = ?");
 
 	var querySql = arr.join(' ');
+	
 	 
 	//链接mysql池
 	db_driver.mysqlPool.getConnection(function (err, connection) {
@@ -153,3 +155,16 @@ exports.insert = function (data, callback) {
 		});
 	})
 };
+
+/**
+ * 修改用户的信息
+ */
+//  exports.update = function (data, callback) {
+// 	 var sql = "update User set ";
+
+//      //测试
+//      var i = 0;
+// 	 for (var key in data) {
+		 
+// 	 } 
+//  }

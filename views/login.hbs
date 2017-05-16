@@ -1,17 +1,17 @@
 <h1>登录界面</h1>
 <div>
 	<form>
-		<label id="username">用户名：</label>
+		<label name="username">用户名：</label>
 		<input type="text" name="username" id="username">
-		<label id="pass">密码: </label>
+		<label name="pass">密码: </label>
 		<input type="password" name="pass" id="pass">
 		<input type="button" id="login" value="登录">
 	</form>
 	<p id="buttonResult">
 	</p>
 </div>
-
-<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script>
+<!--<script src="/assert/js/jquery-3.2.1.min.js"> </script>-->
+<!--<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script>-->
 
 <script>
 	$(document).ready(function() {
@@ -51,6 +51,7 @@
 	// 	var password = document.getElementById("pass").value;
 	// 	var buttonResult = document.getElementById("buttonResult");
 		
+	// 	alert(username + "  " + password);
 	// 	var request = new XMLHttpRequest();
 	// 	request.open("POST", "api/v1/login");
 	// 	var data = "username=" + username + "&password=" + password;

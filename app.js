@@ -5,6 +5,7 @@ var express = require('express');
 var config = appRequire('config/config');
 var routes = appRequire('routes/routes');
 var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var app = express();
 var apiAuth = appRequire('util/validauth');
@@ -14,19 +15,52 @@ var apiAuth = appRequire('util/validauth');
 //加载hbs模块
 var hbs = require('hbs');
 
+//注册helper
+//注册css
+hbs.registerHelper('css', function (str, option) {
+  var cssList = this.cssList || [];
+  str = str.split(/[,，;；]/);
+  console.log('css: ', str);
+  
+  str.forEach(function (item) {
+    if (cssList.indexOf(item) < 0) {
+      cssList.push(item);
+    }
+  });
+  this.cssList = cssList.concat();
+});
+//注册js
+hbs.registerHelper('js', function (str, option) {
+  var jsList = this.jsList || [];
+  str = str.split(/[,，；;]/);
+  console.log('js : ', str);
+  
+  str.forEach(function (item) {
+    if (jsList.indexOf(item) < 0) {
+      jsList.push(item);
+    }
+  });
+});
+
+//设置局部模板
+hbs.registerPartials(__dirname + '/views/partials');
+
+
 //避免dot-hell
 global.appRequire = function(path) {
   return require(path.resolve(__dirname, path));
 }
 
-//制定模板文件的后缀名为html
-app.set('view engine', 'html');
+//制定模板文件的后缀名为hbs
+app.set('view engine', 'hbs');
 //设置views文件夹
 app.set('views', path.join(__dirname, 'views'));
 
+//加载favicon的文件
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //运行hbs模块
-app.engine('html', hbs.__express);
+app.engine('hbs', hbs.__express);
 
 //加载body-parser的模块
 app.use(bodyParser.json());
@@ -38,7 +72,6 @@ app.use(bodyParser.urlencoded({
 
 //制定静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public'));
 
 //加载cookie中间件
 app.use(cookieParser());

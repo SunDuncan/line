@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{title}}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/css/main.css">
+		<script src="/assert/js/jquery-3.2.1.min.js"> </script>
+		{{#each cssList}}
+			 <link rel='stylesheet' href={{this}} />
+	    {{/each}}
+	</head>
+	<body>
+		{{> header}}
+		<div class="container">
+			{{{body}}}
+		</div>
+		{{> footer}}
+		{{#each jsList}}
+			<script src={{this}}></script>
+		{{/each}}
+	</body>
+</html>

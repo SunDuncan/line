@@ -19,9 +19,9 @@
    port: 3000,//服务器的端口
    host: '127.0.0.1',
    mysql: {
-     host: '115.159.185.58',
-     user: 'driver',
-     password: 'sunmaoyun',
+     host: '127.0.0.1',
+     user: 'root',
+     password: '',
      database: 'driver', 
      connectionLimit: 100,
      supportBigNumbers: true,
