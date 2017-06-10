@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
+//用户的后端路由接口
 var userRoute = appRequire('routes/backend/user/userroute');
+//班级的后端路由接口
+var classRoute = appRequire('routes/backend/class/classroute');
 //var roleRoute = appRequire('routes/backend/role/roleroute');
 
 router.get('/login', function (req, res, next) {
@@ -50,5 +53,6 @@ router.get('/upload', function (req, res, next) {
 });
 
 router.use('/user', userRoute);
+router.use('/class', classRoute);
 //router.use('/role', roleRoute);
 module.exports = router;
