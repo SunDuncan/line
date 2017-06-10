@@ -10,11 +10,10 @@ $(document).ready(function() {
 				},
 				success: function (data) {					
 					if (data.data.isSuccess) {
-						$("#buttonResult").html(JSON.stringify(data));
 						localStorage.setItem("access_token", data.access_token);
 					    localStorage.setItem("key", data.data.accountId);
 					    var url = "index?access_token=" + localStorage.getItem("access_token"); 
-					    location.href = url;
+						location.href = url;
 					} else {
 						$("#buttonResult").html("出现错误" + data.msg);
 					}
@@ -25,3 +24,4 @@ $(document).ready(function() {
 			})
 		});
 	});
+

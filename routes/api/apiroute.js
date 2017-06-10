@@ -11,7 +11,6 @@
  var app1 = express();
  var login = appRequire('api/login');
  var sign = appRequire('api/sign');
- var list = appRequire('public/js/user');
  
  router.get('/login', function(req, res, next) {
 	 res.render('picture', {

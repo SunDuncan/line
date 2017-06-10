@@ -9,6 +9,8 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var app = express();
 var apiAuth = appRequire('util/validauth');
+var registerHelper = appRequire('util/registerhelper');  
+
 //var cookieParser = require('cookie-parser');
 
 
@@ -16,35 +18,10 @@ var apiAuth = appRequire('util/validauth');
 var hbs = require('hbs');
 
 //注册helper
-//注册css
-hbs.registerHelper('css', function (str, option) {
-  var cssList = this.cssList || [];
-  str = str.split(/[,，;；]/);
-  console.log('css: ', str);
-  
-  str.forEach(function (item) {
-    if (cssList.indexOf(item) < 0) {
-      cssList.push(item);
-    }
-  });
-  this.cssList = cssList.concat();
-});
-//注册js
-hbs.registerHelper('js', function (str, option) {
-  var jsList = this.jsList || [];
-  str = str.split(/[,，；;]/);
-  console.log('js : ', str);
-  
-  str.forEach(function (item) {
-    if (jsList.indexOf(item) < 0) {
-      jsList.push(item);
-    }
-  });
-});
+registerHelper(hbs);
 
 //设置局部模板
 hbs.registerPartials(__dirname + '/views/partials');
-
 
 //避免dot-hell
 global.appRequire = function(path) {
@@ -59,9 +36,11 @@ app.set('views', path.join(__dirname, 'views'));
 //加载favicon的文件
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-//运行hbs模块
-app.engine('hbs', hbs.__express);
 
+//制定静态文件目录
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(bodyParser());
 //加载body-parser的模块
 app.use(bodyParser.json());
 
@@ -70,8 +49,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//制定静态文件目录
-app.use(express.static(path.join(__dirname, 'public')));
+//运行hbs模块
+app.engine('hbs', hbs.__express);
 
 //加载cookie中间件
 app.use(cookieParser());

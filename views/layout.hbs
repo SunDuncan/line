@@ -4,6 +4,8 @@
 		<title>{{title}}</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/footer.css">
+		<link rel="stylesheet" href="/css/header.css">
 		<script src="/assert/js/jquery-3.2.1.min.js"> </script>
 		{{#each cssList}}
 			 <link rel='stylesheet' href={{this}} />
@@ -15,6 +17,7 @@
 			{{{body}}}
 		</div>
 		{{> footer}}
+		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
 		{{#each jsList}}
 			<script src={{this}}></script>
 		{{/each}}

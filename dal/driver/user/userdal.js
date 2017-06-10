@@ -3,13 +3,14 @@
  * @Date: 2017-05-01 20:40
  * @Last Modified By: 
  * @Last Modified Time:
+ * @function: 用户的dal层
  */
 
 var db_driver = appRequire('db/driver');
 var userModel = appRequire('model/driver/user/usermodel');
 var config = appRequire('config/config');
 var userKey = appRequire('model/driver/user/usermodel');
- 
+
 //根据Account,pwd查询单一有效用户
 exports.querySingleUser = function (accountName, pwd, callback) {
 	var arr = new Array();
@@ -17,12 +18,12 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 	arr.push("from User Where IsActive = 1 and AccountName = ? and Pwd = ?");
 
 	var querySql = arr.join(' ');
-	
-	 
+
+	console.log('querysql = ' + querySql);
 	//链接mysql池
 	db_driver.mysqlPool.getConnection(function (err, connection) {
 		if (err) {
-			callback(true);
+			callback(true, "数据连接失败");
 			return;
 		}
 
@@ -38,7 +39,7 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 		});
 	});
 }
- 
+
 /**
  * 查取用户的信息
  */
@@ -59,7 +60,7 @@ exports.queryUser = function (userData, callback) {
 
 	sql += " limit " + (userData['CurPage'] - 1) * num + " , " + num;
 
-	console.log("查询用户的时候: " + sql); 
+	console.log("查询用户的时候: " + sql);
 	//链接数据库的池
 	db_driver.mysqlPool.getConnection(function (err, connection) {
 		connection.release();
@@ -116,8 +117,8 @@ exports.countNum = function (data, callback) {
 	});
 
 }
- 
- 
+
+
 /**
  * 插入用户
  */
@@ -145,13 +146,13 @@ exports.insert = function (data, callback) {
 
 		connection.release();
 		connection.query(sql, function (err, insertResult) {
-            if (err) {
+			if (err) {
 				callback(true, "数据库插入失败");
-				return ;
+				return;
 			}
-			
+
 			callback(false, insertResult);
-			return ;
+			return;
 		});
 	})
 };
@@ -159,12 +160,37 @@ exports.insert = function (data, callback) {
 /**
  * 修改用户的信息
  */
-//  exports.update = function (data, callback) {
-// 	 var sql = "update User set ";
+exports.update = function (data, callback) {
+	var sql = "update User set ";
 
-//      //测试
-//      var i = 0;
-// 	 for (var key in data) {
-		 
-// 	 } 
-//  }
+	//测试
+	var i = 0;
+	for (var key in data) {
+		if (i == 0) {
+			sql += key + " = '" + data[key] + "' ";
+			i++;
+		} else {
+			sql += ", " + key + " = '" + data[key] + "' ";
+		}
+	}
+
+	sql += "where " + userModel.PK + " = " + data[userModel.PK];
+	console.log("修改用户的sql: " + sql);
+	db_driver.mysqlPool.getConnection(function (err, connection) {
+		if (err) {
+			callback(true, "数据库连接失败");
+			return;
+		}
+
+		connection.release();
+		connection.query(sql, function (err, updateResult) {
+			if (err) {
+				callback(true, '服务器的错误(sql)');
+				return;
+			}
+
+			callback(false, updateResult);
+			return;
+		});
+	})
+}

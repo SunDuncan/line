@@ -32,10 +32,10 @@ exports.querySingleUser = function (accountname, pwd, callback) {
 	});
 }
  
+
 /**
  * 来获取用户的个人信息，查询
  */
-
 exports.queryUser = function (userData, callback) {
 
 	userDAL.queryUser(userData, function (err, queryResult) {
@@ -48,7 +48,8 @@ exports.queryUser = function (userData, callback) {
 		return;
 	});
 }
-  
+
+
 /**
  * 获取在线的所有的人的个数
  */
@@ -63,6 +64,8 @@ exports.queryCountNum = function (data, callback) {
 	   });
 }
    
+
+
    /**
 	* 插入用户
     */
@@ -77,3 +80,18 @@ exports.insertUser = function (data, callback) {
 	});
 }	
 	
+
+/**
+ * 修改用户
+ */	
+exports.updateUser = function (data, callback) {
+	userDAL.update(data, function (err, updateResult) {
+		if (err) {
+			callback(true, updateResult);
+			return ;
+		}
+
+		callback(false, updateResult);
+		return ;
+	});
+}

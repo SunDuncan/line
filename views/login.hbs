@@ -1,3 +1,4 @@
+
 <h1>登录界面</h1>
 <div>
 	<form>
@@ -8,71 +9,13 @@
 		<input type="button" id="login" value="登录">
 	</form>
 	<p id="buttonResult">
-	</p>
+	</p>	
 </div>
-<!--<script src="/assert/js/jquery-3.2.1.min.js"> </script>-->
-<!--<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script>-->
 
-<script>
-	$(document).ready(function() {
-		$("#login").click(function() {
-			$.ajax({
-				type: "POST",
-				url: "api/v1/login",
-				dataType: "json",
-				data: {
-					username: $("#username").val(),
-					password: $("#pass").val()
-				},
-				success: function (data) {					
-					if (data.data.isSuccess) {
-						$("#buttonResult").html(JSON.stringify(data));
-						localStorage.setItem("access_token", data.access_token);
-					    localStorage.setItem("key", data.data.accountId);
-					    var url = "index?access_token=" + localStorage.getItem("access_token"); 
-					    location.href = url;
-					} else {
-						$("#buttonResult").html("出现错误" + data.msg);
-					}
-				},
-				error: function(jqXHR) {
-					alert("发生错误："  + jqXHR.status);
-				}
-			})
-		});
-	});
-	// window.onload = function () {
-	// 	 var button = document.getElementById("login");
-	// 	 button.onclick = loginResult;
-	// }
-	
-	// function loginResult() {
-	// 	var username = document.getElementById("username").value;
-	// 	var password = document.getElementById("pass").value;
-	// 	var buttonResult = document.getElementById("buttonResult");
-		
-	// 	alert(username + "  " + password);
-	// 	var request = new XMLHttpRequest();
-	// 	request.open("POST", "api/v1/login");
-	// 	var data = "username=" + username + "&password=" + password;
-	// 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	// 	request.send(data);
-	// 	request.onreadystatechange = function() {
-	// 		if (request.readyState === 4) {
-	// 			if (request.status === 200) {
-					
-	// 				var loginInfo = JSON.parse(request.responseText);
-					
-	// 				buttonResult.innerHTML = request.responseText;
-	// 				localStorage.setItem("access_token", loginInfo.access_token);
-	// 				localStorage.setItem("key", loginInfo.data.accountId);
-	// 				var url = "index?access_token=" + localStorage.getItem("access_token"); 
-	// 				location.href = url;
-	// 			} else {
-	// 				alert("发生错误:" + request.status);
-	// 			}
-	// 		}
-	// 	}
-	// }
-
+<script id="loginSuccess" type="text/x-handlebars-template">
+		<p><em>这只是一个测试</em></p><br/>
+		\{{access_token}}
 </script>
+<!--<script src="/assert/js/jquery-3.2.1.min.js"> </script>-->
+
+

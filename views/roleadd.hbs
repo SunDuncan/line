@@ -1,0 +1,20 @@
+<div id="content">
+	<form>
+	  <p><label>角色名称:<input type="text"/></label></p>
+	  <p><label>角色代码:<input type="text"/></label></p>
+	  是否有效
+	  <label><input type="radio" name="valid"/>有效</label>
+	  <label><input type="radio" name="valid"/>无效</label>
+	</form>
+	<div id="control">
+		<span id="control_span"><img src="images/icon/plus.png"/>添加功能点</span>
+		  <ul id="control_ul" style="display:none">
+		  	<li><img src="images/icon/reduce.png">创班<input type="checkbox" style="margin-left:10px;"/></li>
+		  	<li><img src="images/icon/reduce.png">排队<input type="checkbox" style="margin-left:10px;"/></li>
+		  	<li><img src="images/icon/reduce.png">积分<input type="checkbox" style="margin-left:10px;"/></li>
+		  </ul>
+	</div>
+	<input type="button" value="添加" id="btn1" class="btn btn-success"/>
+	<input type="button" value="返回" id="btn2"class="btn btn-success">
+</div>
+<script src="/js/roleadd.js"></script>

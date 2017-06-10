@@ -21,7 +21,7 @@
    mysql: {
      host: '127.0.0.1',
      user: 'root',
-     password: '',
+     password: '123456',
      database: 'driver', 
      connectionLimit: 100,
      supportBigNumbers: true,
