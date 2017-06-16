@@ -61,3 +61,16 @@ exports.deleteClass = function (deleteData, callback) {
         return ;
     });
 }
+
+//查询班级的所有的信息
+exports.queryClassAllInfo = function(callback) {
+    classDal.queryClassAllInfo(function (err, queryClassResult) {
+        if (err) {
+            callback(true, queryClassResult);
+            return ;
+        }
+
+        callback(false, queryClassResult);
+        return ;
+    })
+}

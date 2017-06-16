@@ -178,4 +178,32 @@ router.delete('/', function (req, res) {
     });
 });
 
+/**
+ * 查询班级的信息的路由
+ */
+router.get('/', function (req, res) {
+    classService.queryClassAllInfo(function (err, queryClassResults){
+        if (err) {
+            res.status(500);
+            res.json({
+                status: 500,
+                isSuccess: false,
+                msg: queryClassResults
+            })
+            return;
+        }
+
+        res.status(200);
+        res.json({
+            status: 200,
+            isSuccess: true,
+            msg: {
+                msg: "查询成功",
+                data: queryClassResults
+            }
+        })
+        return;
+    })
+});
+
 module.exports = router;

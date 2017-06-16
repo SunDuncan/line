@@ -86,7 +86,7 @@ exports.insertClass = function (insertData, callback) {
  */
 
 exports.queryClassInfo = function (queryData, callback) {
-    var sql = "SELECT ClassID,CreateUserID,CreateTime,EndTime,ClassCode,IsActive FROM class where IsActive = 1 ";
+    var sql = "SELECT ClassID,CreateUserID,CreateTime,EndTime,ClassCode,IsActive,ListID FROM class where IsActive = 1 ";
     for (var key in queryData) {
         sql += " and " + key + " = '" + queryData[key] + "' ";
     }
@@ -137,4 +137,31 @@ exports.deleteClass = function (deleteData, callback) {
             return ;
         })
     });
+}
+
+//查询班级的信息
+exports.queryClassAllInfo = function(callback) {
+    var sql = "select A.ClassID,B.UserName,A.CreateUserID,A.CreateTime,A.ClassCode,A.IsActive";
+    sql += " from class A left join user B on B.UserID = A.CreateUserID where A.IsActive = 1";
+
+
+    console.log("查询班级所有信息的sql" + sql);
+
+    db_driver.mysqlPool.getConnection(function(err, connection) {
+        if (err) {
+            callback(true, "数据库链接失败");
+            return ;
+        }
+
+        connection.query(sql, function (err, queryResult) {
+            connection.release();
+            if (err) {
+                callback(true, "服务器出错（sql）");
+                return ;
+            }
+
+            callback(false, queryResult);
+            return ;
+        });
+    }) 
 }
