@@ -10,7 +10,10 @@ var classUserRoute = appRequire('routes/backend/classuser/classuserroute');
 var messageRoute = appRequire('routes/backend/message/messageroute');
 //队列的接口路由信息
 var listRoute = appRequire('routes/backend/list/listroute');
-//var roleRoute = appRequire('routes/backend/role/roleroute');
+//角色的接口路由
+var roleRoute = appRequire('routes/backend/role/roleroute');
+//功能点的接口路由
+var functionRoute = appRequire('routes/backend/function/functionroute');
 
 router.get('/login', function (req, res, next) {
 	res.render('login', {
@@ -63,5 +66,6 @@ router.use('/class', classRoute);
 router.use('/classuser', classUserRoute);
 router.use('/message', messageRoute);
 router.use('/list', listRoute);
-//router.use('/role', roleRoute);
+router.use('/role', roleRoute);
+router.use('/function', functionRoute);
 module.exports = router;

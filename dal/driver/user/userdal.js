@@ -46,8 +46,11 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 
 exports.queryUser = function (userData, callback) {
 	var arr = new Array();
-	arr.push('select A.UserID,A.UserName,A.Gender,A.Pwd,A.PortraitAddress,A.AccountName,A.IDCard,A.CreateTime,A.EndTime,A.IsActive,A.StatusID,B.DictionaryValue as Status');
-	arr.push(",C.ClassID from User A left join Dictionary B on A.StatusID = B.DictionaryValueID left join classuser C on A.UserID = C.UserID where 1 = 1 and A.IsActive = 1 and B.Category = 'Status'");
+	arr.push('select A.UserID,A.UserName,A.Gender,A.Pwd,A.PortraitAddress,A.AccountName,A.IDCard');
+	arr.push(',A.CreateTime,A.EndTime,A.IsActive,A.StatusID,B.DictionaryValue as Status');
+	arr.push(",C.ClassID,D.RoleID,F.RoleName from User A left join Dictionary B on A.StatusID = B.DictionaryValueID ");
+	arr.push("left join classuser C on A.UserID = C.UserID left join userrole D on A.UserID = D.UserID left join role F on D.RoleID = F.RoleID");
+	arr.push("where 1 = 1 and A.IsActive = 1 and B.Category = 'Status'");
 	var sql = arr.join(' ');
 	for (var key in userData) {
 		if (key != 'PageNum' && key != 'CurPage') {

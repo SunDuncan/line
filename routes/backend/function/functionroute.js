@@ -3,18 +3,18 @@
  * @Date: 2017-06-17 15:35
  * @Last Modified By:
  * @Last Modified Time:
- * @function: 角色的路由层
+ * @function: 功能点的路由层
  */
 
 var express = require('express');
 var router = express.Router();
-var roleService = appRequire('service/driver/role/roleservice');
+var functionService = appRequire('service/driver/function/functionService');
 
 /**
  * 插入的操作
  */
-router.post('/', function (req, res){ 
-    var dataRequire = ['RoleName', 'RoleCode'];
+router.post('/', function (req, res) {
+    var dataRequire = ['FunctionName', 'FunctionCode'];
     var err = "未填： ";
     for (var key in dataRequire) {
         if (!(dataRequire[key] in req.body)) {
@@ -31,11 +31,10 @@ router.post('/', function (req, res){
         })
     }
 
-    var roleName = req.body.RoleName ? req.body.RoleName : '';
-    var roleCode = req.body.RoleCode ? req.body.RoleCode : '';
-    
+    var functionName = req.body.FunctionName ? req.body.FunctionName : '';
+    var functionCode = req.body.FunctionCode ? req.body.FunctionCode : '';
 
-    if (roleName.length == 0) {
+    if (functionName.length == 0) {
         res.status(400);
         return res.json({
             status: 400,
@@ -44,7 +43,7 @@ router.post('/', function (req, res){
         });
     }
 
-    if (roleCode.length == 0) {
+    if (functionCode.length == 0) {
         res.status(400);
         return res.json({
             status: 400,
@@ -53,35 +52,35 @@ router.post('/', function (req, res){
         });
     }
 
-    var roleData = {
-        RoleName: roleName,
-        RoleCode: roleCode,
+    var functionData = {
+        FunctionName: functionName,
+        FunctionCode: functionCode,
         IsActive: 1
     }
 
-    roleService.insertRole(roleData, function (err, roleResult) {
+    functionService.insertFunction(functionData, function (err, functionResult) {
         if (err) {
             res.status(500);
             return res.json({
                 status: 500,
                 isSuccess: false,
-                msg: roleResult
+                msg: functionResult
             })
         }
 
-        if (roleResult.insertId > 0) {
+        if (functionResult.insertId > 0) {
             res.status(200);
             return res.json({
                 status: 200,
                 isSuccess: true,
-                msg: "角色创建成功"
+                msg: "功能点创建成功"
             })
         } else {
             res.status(200);
             return res.json({
                 status: 200,
                 isSuccess: false,
-                msg: '角色创建失败'
+                msg: '功能点创建失败'
             })
         }
     })
@@ -91,12 +90,12 @@ router.post('/', function (req, res){
  * 查询操作
  */
 
-router.get('/', function (req, res){
+router.get('/', function (req, res) {
     var queryData = {
         IsActive: 1
     }
 
-    roleService.queryRole(queryData, function (err, queryResult) {
+    functionService.queryFunction(queryData, function (err, queryResult) {
         if (err) {
             res.status(500);
             return res.json({
@@ -131,36 +130,36 @@ router.get('/', function (req, res){
  * 修改的操作
  */
 
-router.put('/', function (req, res){
-    var roleID = req.body.RoleID;
-    if (roleID == undefined) {
+router.put('/', function (req, res) {
+    var functionID = req.body.FunctionID;
+    if (functionID == undefined) {
         res.status(400);
         res.json({
             status: 400,
             isSuccess: false,
-            msg: "角色的ID不能为空"
+            msg: "功能点的ID不能为空"
         })
         return;
     }
 
-    var updateData = {RoleID: roleID};
-    var roleName = req.body.RoleName ? req.body.RoleName : '';
-    var roleCode = req.body.RoleCode ? req.body.RoleCode : '';
+    var updateData = { FunctionID: functionID };
+    var functionName = req.body.FunctionName ? req.body.FunctionName : '';
+    var functionCode = req.body.FunctionCode ? req.body.FunctionCode : '';
     var isActive = req.body.IsActive ? req.body.IsActive : 0;
 
-    if (roleName != '')
-    {
-        updateData.RoleName = roleName;
-    } 
+    if (functionName != '') {
+        updateData.FunctionName = functionName;
+    }
 
-    if (roleCode != '') {
-        updateData.RoleCode =roleCode;
+    if (functionCode != '') {
+        updateData.FunctionCode = functionCode;
     }
 
     if (isActive != 0) {
         updateData.IsActive = isActive;
     }
-    roleService.updateRole(updateData, function (err, result){
+    
+    functionService.updateFunction(updateData, function (err, result) {
         if (err) {
             res.status(500);
             return res.json({
@@ -181,33 +180,34 @@ router.put('/', function (req, res){
             res.status(200);
             return res.json({
                 status: 200,
-                isSuccess: true, 
+                isSuccess: true,
                 msg: "不需要修改"
             })
         }
-
-
     })
 });
 
-router.delete('/', function (req, res){ 
-     var roleID = req.body.RoleID;
-    if (roleID == undefined) {
+/**
+ * 删除操作
+ */
+router.delete('/', function (req, res) {
+    var functionID = req.body.FunctionID;
+    if (functionID == undefined) {
         res.status(400);
         res.json({
             status: 400,
             isSuccess: false,
-            msg: "角色的ID不能为空"
+            msg: "功能点的ID不能为空"
         })
         return;
     }
 
     var updateData = {
-        RoleID: roleID,
+        FunctionID: functionID,
         IsActive: 0
     };
-    
-    roleService.updateRole(updateData, function (err, result){
+
+    functionService.updateFunction(updateData, function (err, result) {
         if (err) {
             res.status(500);
             return res.json({
@@ -228,13 +228,11 @@ router.delete('/', function (req, res){
             res.status(200);
             return res.json({
                 status: 200,
-                isSuccess: true, 
+                isSuccess: true,
                 msg: "不需要修改"
             })
         }
-
-
     })
-})
+});
 
 module.exports = router;
