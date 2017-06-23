@@ -145,7 +145,7 @@ router.put('/', function (req, res) {
     var updateData = { FunctionID: functionID };
     var functionName = req.body.FunctionName ? req.body.FunctionName : '';
     var functionCode = req.body.FunctionCode ? req.body.FunctionCode : '';
-    var isActive = req.body.IsActive ? req.body.IsActive : 0;
+        
 
     if (functionName != '') {
         updateData.FunctionName = functionName;
@@ -158,7 +158,7 @@ router.put('/', function (req, res) {
     if (isActive != 0) {
         updateData.IsActive = isActive;
     }
-    
+
     functionService.updateFunction(updateData, function (err, result) {
         if (err) {
             res.status(500);
