@@ -141,7 +141,7 @@ exports.deleteClass = function (deleteData, callback) {
 
 //查询班级的信息
 exports.queryClassAllInfo = function(callback) {
-    var sql = "select A.ClassID,B.UserName,A.CreateUserID,A.CreateTime,A.ClassCode,A.IsActive";
+    var sql = "select A.ClassID,B.UserName,B.AccountName,A.CreateUserID,A.CreateTime,A.ClassCode,A.IsActive";
     sql += " from class A left join user B on B.UserID = A.CreateUserID where A.IsActive = 1";
 
 
