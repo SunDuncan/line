@@ -133,7 +133,7 @@ exports.queryListInfo = function (queryData, callback) {
  */
 
 exports.deleteListUser = function (deleteData, callback) {
-	var sql = "DELETE from List Where UserID = " + deleteData['UserID'];
+	var sql = "DELETE from list Where UserID = " + deleteData['UserID'];
 
 	console.log("退出队列的sql:" + sql);
 	db_driver.mysqlPool.getConnection(function (err, connection) {

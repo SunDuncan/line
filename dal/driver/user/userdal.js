@@ -15,7 +15,7 @@ var userKey = appRequire('model/driver/user/usermodel');
 exports.querySingleUser = function (accountName, pwd, callback) {
 	var arr = new Array();
 	arr.push("SELECT UserID,UserName,Gender,Pwd,PortraitAddress,AccountName,IDCard,CreateTime,EndTime,IsActive,StatusID");
-	arr.push("from User Where IsActive = 1 and AccountName = ? and Pwd = ?");
+	arr.push("from user Where IsActive = 1 and AccountName = ? and Pwd = ?");
 
 	var querySql = arr.join(' ');
 
@@ -23,6 +23,7 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 	//链接mysql池
 	db_driver.mysqlPool.getConnection(function (err, connection) {
 		if (err) {
+			console.log("err:" + err);
 			callback(true, "数据连接失败");
 			return;
 		}
@@ -30,7 +31,8 @@ exports.querySingleUser = function (accountName, pwd, callback) {
 		connection.query(querySql, [accountName, pwd], function (err, results) {
 			connection.release();
 			if (err) {
-				callback(true);
+				console.log("err:" + err);
+				callback(true,"服务器错误");
 				return;
 			}
 
@@ -48,7 +50,7 @@ exports.queryUser = function (userData, callback) {
 	var arr = new Array();
 	arr.push('select A.UserID,A.UserName,A.Gender,A.Pwd,A.PortraitAddress,A.AccountName,A.IDCard');
 	arr.push(',A.CreateTime,A.EndTime,A.IsActive,A.StatusID,B.DictionaryValue as Status');
-	arr.push(",C.ClassID,D.RoleID,F.RoleName from User A left join Dictionary B on A.StatusID = B.DictionaryValueID ");
+	arr.push(",C.ClassID,D.RoleID,F.RoleName from user A left join dictionary B on A.StatusID = B.DictionaryValueID ");
 	arr.push("left join classuser C on A.UserID = C.UserID left join userrole D on A.UserID = D.UserID left join role F on D.RoleID = F.RoleID");
 	arr.push("where 1 = 1 and A.IsActive = 1 and B.Category = 'Status'");
 	var sql = arr.join(' ');
@@ -89,7 +91,7 @@ exports.queryUser = function (userData, callback) {
  */
 
 exports.countNum = function (data, callback) {
-	var sql = "select count(1) as num from User where IsActive = 1 ";
+	var sql = "select count(1) as num from user where IsActive = 1 ";
 
 	for (var key in data) {
 
@@ -126,7 +128,7 @@ exports.countNum = function (data, callback) {
  * 插入用户
  */
 exports.insert = function (data, callback) {
-	var sql = "insert into User set";
+	var sql = "insert into user set";
 
 	var i = 0;
 	for (var key in data) {
@@ -164,7 +166,7 @@ exports.insert = function (data, callback) {
  * 修改用户的信息
  */
 exports.update = function (data, callback) {
-	var sql = "update User set ";
+	var sql = "update user set ";
 
 	//测试
 	var i = 0;

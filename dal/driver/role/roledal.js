@@ -82,7 +82,7 @@ var db_dirver = appRequire('db/driver');
    */
 
   exports.updateRole = function(updateData, callback) {
-      var sql = "UPDATE Role SET ";
+      var sql = "UPDATE role SET ";
       var isFirst = 0;
       for (var key in updateData) {
           if (isFirst == 0) {

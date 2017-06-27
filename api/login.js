@@ -42,8 +42,8 @@
 	
 	userService.querySingleUser(data.AccountName, data.password, function (err, queryResult) {
 		if (err) {
+			console.log("这边出现了错误..");
 			res.status(500);
-
 			return res.json(resultData);
 		}
 		

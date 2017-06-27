@@ -117,7 +117,7 @@ exports.queryClassInfo = function (queryData, callback) {
  *@function  删除班级
  */
 exports.deleteClass = function (deleteData, callback) {
-    var sql = "Update table Class SET IsActive = 0 where ClassID = " + deleteData.ClassID;
+    var sql = "Update table class SET IsActive = 0 where ClassID = " + deleteData.ClassID;
 
     console.log("删除班级的sql:" + sql);
     db_driver.mysqlPool.getConnection(function (err, connection) {
