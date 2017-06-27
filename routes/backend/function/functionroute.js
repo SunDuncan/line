@@ -8,7 +8,7 @@
 
 var express = require('express');
 var router = express.Router();
-var functionService = appRequire('service/driver/function/functionService');
+var functionService = appRequire('service/driver/function/functionservice');
 
 /**
  * 插入的操作
