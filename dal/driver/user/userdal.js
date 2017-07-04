@@ -56,7 +56,12 @@ exports.queryUser = function (userData, callback) {
 	var sql = arr.join(' ');
 	for (var key in userData) {
 		if (key != 'PageNum' && key != 'CurPage') {
-			sql += " and " + key + " = '" + userData[key] + "' ";
+			if (key == 'UserID') {
+				sql += " and A. " + key + " = '" + userData[key] + "' ";
+			} esle {
+		
+			sql+= "and " + key + " = '" + userData[key] + "'"; 
+}
 		}
 	}
 
